@@ -25,7 +25,7 @@ if ($conn->connect_error) {
 }
 
 // Crear la sentencia de consulta SQL 
-$sentencia = "select date_format(timestamp,'%T') as time, valor from senal order by id DESC limit 500";
+$sentencia = "select date_format(timestamp, '%T') as time, valor from senal order by id desc limit 500";
 // Ejecutar la consulta y almacenar el resultado
 $resultado = $conn->query($sentencia);
 
@@ -33,8 +33,14 @@ $resultado = $conn->query($sentencia);
 if ($resultado->num_rows > 0) {
     // armar el resutado con formato CSV
     echo "Tiempo, Value\n";
-	// recorrer todos los registros del resultado
+    // recorrer todos los registros del resultado
+    $data = array();
     while ($registro = $resultado->fetch_assoc()) {
-        echo $registro["time"] . "," . $registro["valor"] . "\n"; 
+        //echo $registro["time"] . "," . $registro["valor"] . "\n"; 
+        array_unshift($data, $registro["time"] . "," . $registro["valor"] . "\n");
     }
+    foreach($data as $item){
+        echo $item; 
+    }
+
 }
