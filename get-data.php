@@ -11,8 +11,8 @@ date_default_timezone_set('America/Guayaquil');
 
 // Conexion con la BDD
 $servidor = "localhost";    // Ip o dominio del servidor de BDD
-$usuario = "root";          // Nombre del usuario de BDD
-$password = "";             // Contraseña del usuario BDD
+$usuario = "admindb";          // Nombre del usuario de BDD
+$password = "roY4l.tea";             // Contraseña del usuario BDD
 $base_datos = "ecg";   // Nombre de la base de datos
 
 // Crear la conexión con la Base de datos específica
@@ -36,8 +36,10 @@ if ($resultado->num_rows > 0) {
     // recorrer todos los registros del resultado
     $data = array();
     while ($registro = $resultado->fetch_assoc()) {
-        //echo $registro["time"] . "," . $registro["valor"] . "\n"; 
-        array_unshift($data, $registro["time"] . "," . $registro["valor"] . "\n");
+	    //echo $registro["time"] . "," . $registro["valor"] . "\n";
+	    $mV = round(($registro["valor"] * 3.3) /1023, 6);
+	    //$mV = $registro["valor"];
+        array_unshift($data, $registro["time"] . "," . $mV. "\n");
     }
     foreach($data as $item){
         echo $item; 
